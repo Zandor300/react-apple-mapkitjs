@@ -1,6 +1,6 @@
 {
-  "name": "react-apple-mapkitjs",
-  "version": "0.2.5",
+  "name": "@zandor300/react-apple-mapkitjs",
+  "version": "0.3.0",
   "description": "A react wrapper for apple mapkit.js",
   "main": "lib/index.js",
   "scripts": {
@@ -44,6 +44,6 @@
   "dependencies": {},
   "repository": {
     "type": "git",
-    "url": "https://github.com/tonyduanesmith/react-apple-mapkitjs"
+    "url": "https://github.com/Zandor300/react-apple-mapkitjs"
   }
 }
