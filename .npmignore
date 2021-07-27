@@ -3,3 +3,4 @@ src
 .babelrc
 webpack.config.js
 config.js
+.idea
