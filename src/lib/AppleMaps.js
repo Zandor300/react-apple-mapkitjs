@@ -12,6 +12,7 @@ class AppleMaps extends Component {
 		})
 
 		this.map = new mapkit.Map('map')
+		this.annotations = {};
 
 		// Set initial mapType
 		if(initialMapType !== undefined) {
@@ -62,25 +63,55 @@ class AppleMaps extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		const { children } = this.props
-		let checkLongitudeChange, checkLatitudeChange, checkDirectionChange
+		const {
+			children,
+			latitude,
+			longitude,
+			spanLat,
+			spanLong,
+			zoomLevel
+		} = this.props
+
+		if(
+			prevProps.latitude !== latitude ||
+			prevProps.longitude !== longitude ||
+			prevProps.spanLat !== spanLat ||
+			prevProps.spanLong !== spanLong ||
+			prevProps.zoomLevel !== zoomLevel
+		) {
+			this.setMainCoords()
+		}
+
+		if (children !== undefined && children.length) {
+			children.forEach(child => {
+				if (child.props.isAnnotation) {
+					this.updateAnnotation(child.props)
+				}
+			})
+		} else if (children !== undefined && children.props) {
+			if (children.props.isAnnotation) {
+				this.updateAnnotation(children.props)
+			}
+		}
+
+		let checkCurrentLocationLatitudeChange, checkCurrentLocationLongitudeChange, checkCurrentLocationDirectionChange
 		if (typeof children !== 'undefined') {
 			const firstChild = children[0] ? children[0] : children;
 			const prevFirstChild = prevProps.children[0] ? prevProps.children[0] : prevProps.children;
-			checkLongitudeChange =
-				firstChild.props.longitude !==
-				prevFirstChild.props.longitude
-			checkLatitudeChange =
+			checkCurrentLocationLatitudeChange =
 				firstChild.props.latitude !==
 				prevFirstChild.props.latitude
-			checkDirectionChange =
+			checkCurrentLocationLongitudeChange =
+				firstChild.props.longitude !==
+				prevFirstChild.props.longitude
+			checkCurrentLocationDirectionChange =
 				firstChild.props.direction !==
 				prevFirstChild.props.direction
 		}
 		if (
-			checkLongitudeChange ||
-			checkLatitudeChange ||
-			checkDirectionChange
+			checkCurrentLocationLatitudeChange ||
+			checkCurrentLocationLongitudeChange ||
+			checkCurrentLocationDirectionChange
 		) {
 			if (children !== undefined && children.length) {
 				children.forEach(child => {
@@ -98,6 +129,7 @@ class AppleMaps extends Component {
 
 	createAnnotation(annotationOptions) {
 		const {
+			id,
 			longitude,
 			latitude,
 			color,
@@ -119,7 +151,33 @@ class AppleMaps extends Component {
 		})
 		glyphText ? (newAnnotation.glyphText = glyphText) : ''
 		glyphImage ? (newAnnotation.glyphImage = { 1: glyphImage }) : ''
+		if(id) {
+			this.annotations[id] = newAnnotation;
+		} else {
+			console.warn("Apple MapKitJS annotation created without id prop!");
+		}
 		this.map.showItems([newAnnotation])
+	}
+
+	updateAnnotation(annotationOptions) {
+		const {
+			id,
+			latitude,
+			longitude
+		} = annotationOptions
+
+		if(id === undefined) {
+			return
+		}
+
+		if(!(id in this.annotations)) {
+			this.createAnnotation(annotationOptions)
+			return
+		}
+		let annotation = this.annotations[id];
+		if(latitude !== annotation.coordinate.latitude || longitude !== annotation.coordinate.longitude) {
+			annotation.coordinate = new mapkit.Coordinate(latitude, longitude)
+		}
 	}
 
 	createImageAnnotation(annotationOptions) {
@@ -185,11 +243,10 @@ class AppleMaps extends Component {
 
 	setMainCoords() {
 		const { longitude, latitude, spanLat, spanLong } = this.props
-		const mainCoords = new mapkit.CoordinateRegion(
+		this.map.region = new mapkit.CoordinateRegion(
 			new mapkit.Coordinate(latitude, longitude),
 			new mapkit.CoordinateSpan(spanLat ? spanLat : this.zoomLevel(), spanLong ? spanLong : this.zoomLevel())
 		)
-		this.map.region = mainCoords
 	}
 
 	zoomLevel() {
