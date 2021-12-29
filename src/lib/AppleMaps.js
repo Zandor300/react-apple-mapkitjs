@@ -69,7 +69,9 @@ class AppleMaps extends Component {
 			longitude,
 			spanLat,
 			spanLong,
-			zoomLevel
+			zoomLevel,
+			width,
+			height
 		} = this.props
 
 		if(
@@ -77,7 +79,9 @@ class AppleMaps extends Component {
 			prevProps.longitude !== longitude ||
 			prevProps.spanLat !== spanLat ||
 			prevProps.spanLong !== spanLong ||
-			prevProps.zoomLevel !== zoomLevel
+			prevProps.zoomLevel !== zoomLevel ||
+			prevProps.width !== width ||
+			prevProps.height !== height
 		) {
 			this.setMainCoords()
 		}
