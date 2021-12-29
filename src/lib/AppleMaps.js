@@ -71,18 +71,20 @@ class AppleMaps extends Component {
 			spanLong,
 			zoomLevel,
 			width,
-			height
+			height,
+			autoAdjust
 		} = this.props
 
-		if(
+		if((
 			prevProps.latitude !== latitude ||
 			prevProps.longitude !== longitude ||
 			prevProps.spanLat !== spanLat ||
 			prevProps.spanLong !== spanLong ||
 			prevProps.zoomLevel !== zoomLevel ||
 			prevProps.width !== width ||
-			prevProps.height !== height
-		) {
+			prevProps.height !== height ||
+			prevProps.autoAdjust !== autoAdjust
+		) && autoAdjust) {
 			this.setMainCoords()
 		}
 
@@ -298,7 +300,8 @@ AppleMaps.defaultProps = {
 	height: '100vh',
 	zoomLevel: 6,
 	longitude: 53.8008,
-	latitude: -1.5491
+	latitude: -1.5491,
+	autoAdjust: false
 }
 
 export default AppleMaps
