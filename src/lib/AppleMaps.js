@@ -12,7 +12,7 @@ class AppleMaps extends Component {
 		})
 
 		this.map = new mapkit.Map('map')
-		this.annotations = {};
+		this.annotations = {}
 
 		// Set initial mapType
 		if(initialMapType !== undefined) {
@@ -88,30 +88,59 @@ class AppleMaps extends Component {
 			this.setMainCoords()
 		}
 
+		let currentAnnotationIds = []
 		if (children !== undefined && children.length) {
 			children.forEach(child => {
 				if (child.props.isAnnotation) {
+					if(child.props.id) {
+						currentAnnotationIds.push(child.props.id)
+					}
 					this.updateAnnotation(child.props)
 				}
 			})
 		} else if (children !== undefined && children.props) {
 			if (children.props.isAnnotation) {
+				if(children.props.id) {
+					currentAnnotationIds.push(children.props.id)
+				}
 				this.updateAnnotation(children.props)
+			}
+		}
+
+		const prevChildren = prevProps.children
+		if (prevChildren !== undefined && prevChildren.length) {
+			prevChildren.forEach(child => {
+				const id = child.props.id
+				if(id === undefined) {
+					return
+				}
+				if(child.props.isAnnotation && !currentAnnotationIds.includes(id) && id in this.annotations) {
+					this.removeAnnotation(child.props)
+				}
+			})
+		} else if (prevChildren !== undefined && prevChildren.props) {
+			const child = prevChildren
+			const id = child.props.id
+			if(id === undefined) {
+				return
+			}
+			if(child.props.isAnnotation && !currentAnnotationIds.includes(id) && id in this.annotations) {
+				this.removeAnnotation(child.props)
 			}
 		}
 
 		let checkCurrentLocationLatitudeChange, checkCurrentLocationLongitudeChange, checkCurrentLocationDirectionChange
 		if (typeof children !== 'undefined') {
-			const firstChild = children[0] ? children[0] : children;
-			const prevFirstChild = prevProps.children[0] ? prevProps.children[0] : prevProps.children;
+			const firstChild = children[0] ? children[0] : children
+			const prevFirstChild = prevProps.children[0] ? prevProps.children[0] : prevProps.children
 			if(firstChild.props && prevFirstChild.props) {
 				checkCurrentLocationLatitudeChange = firstChild.props.latitude !== prevFirstChild.props.latitude
 				checkCurrentLocationLongitudeChange = firstChild.props.longitude !== prevFirstChild.props.longitude
 				checkCurrentLocationDirectionChange = firstChild.props.direction !== prevFirstChild.props.direction
 			} else if(firstChild.props && !prevFirstChild.props) {
-				checkCurrentLocationLatitudeChange = true;
-				checkCurrentLocationLongitudeChange = true;
-				checkCurrentLocationDirectionChange = true;
+				checkCurrentLocationLatitudeChange = true
+				checkCurrentLocationLongitudeChange = true
+				checkCurrentLocationDirectionChange = true
 			}
 		}
 		if (
@@ -158,11 +187,11 @@ class AppleMaps extends Component {
 		glyphText ? (newAnnotation.glyphText = glyphText) : ''
 		glyphImage ? (newAnnotation.glyphImage = { 1: glyphImage }) : ''
 		if(id) {
-			this.annotations[id] = newAnnotation;
+			this.annotations[id] = newAnnotation
 		} else {
-			console.warn("Apple MapKitJS annotation created without id prop!");
+			console.warn("Apple MapKitJS annotation created without id prop!")
 		}
-		this.map.showItems([newAnnotation])
+		this.map.addAnnotation(newAnnotation)
 	}
 
 	updateAnnotation(annotationOptions) {
@@ -180,10 +209,24 @@ class AppleMaps extends Component {
 			this.createAnnotation(annotationOptions)
 			return
 		}
-		let annotation = this.annotations[id];
+		let annotation = this.annotations[id]
 		if(latitude !== annotation.coordinate.latitude || longitude !== annotation.coordinate.longitude) {
 			annotation.coordinate = new mapkit.Coordinate(latitude, longitude)
 		}
+	}
+
+	removeAnnotation(annotationOptions) {
+		const { id } = annotationOptions
+
+		if(id === undefined) {
+			return
+		}
+		if(!(id in this.annotations)) {
+			return
+		}
+
+		this.map.removeAnnotation(this.annotations[id])
+		delete this.annotations[id]
 	}
 
 	createImageAnnotation(annotationOptions) {
@@ -205,7 +248,7 @@ class AppleMaps extends Component {
 			visible,
 			url: { 1: url }
 		})
-		this.map.showItems([newAnnotation])
+		this.map.addAnnotation(newAnnotation)
 	}
 
 	createCurrentLocationOverride(locationOptions) {
