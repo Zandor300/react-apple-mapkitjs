@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 
 class AppleMaps extends Component {
 	componentDidMount() {
-		const { token, children, initialMapType } = this.props
+		const { children, initialMapType } = this.props
 		this.canvas = document.createElement('canvas')
 		this.canvas.id = 'currentLocationOverride'
 		mapkit.init({
 			authorizationCallback: function(done) {
-				done(token)
+				done(this.props.token)
 			}
 		})
 
