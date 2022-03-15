@@ -1,13 +1,19 @@
 import React, { Component } from 'react'
+import TokenManager from "./TokenManager"
 
 class AppleMaps extends Component {
 	componentDidMount() {
-		const { children, initialMapType } = this.props
+		const { children, initialMapType, token } = this.props
+
+		TokenManager.getInstance().setToken(token)
+
+		this.setState({ mapkitToken: token })
+
 		this.canvas = document.createElement('canvas')
 		this.canvas.id = 'currentLocationOverride'
 		mapkit.init({
-			authorizationCallback: function(done) {
-				done(this.props.token)
+			authorizationCallback: (done) => {
+				done(TokenManager.getInstance().getToken())
 			}
 		})
 
@@ -64,6 +70,7 @@ class AppleMaps extends Component {
 
 	componentDidUpdate(prevProps) {
 		const {
+			token,
 			children,
 			latitude,
 			longitude,
@@ -74,6 +81,8 @@ class AppleMaps extends Component {
 			height,
 			autoAdjust
 		} = this.props
+
+		TokenManager.getInstance().setToken(token)
 
 		if((
 			prevProps.latitude !== latitude ||
