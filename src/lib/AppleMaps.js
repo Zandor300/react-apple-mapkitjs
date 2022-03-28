@@ -3,7 +3,7 @@ import TokenManager from "./TokenManager"
 
 class AppleMaps extends Component {
 	componentDidMount() {
-		const { children, initialMapType, token } = this.props
+		const { children, initialMapType, token, colorScheme } = this.props
 
 		TokenManager.getInstance().setToken(token)
 
@@ -23,6 +23,9 @@ class AppleMaps extends Component {
 		// Set initial mapType
 		if(initialMapType !== undefined) {
 			this.map.mapType = initialMapType
+		}
+		if(colorScheme !== undefined) {
+			this.map.colorScheme = colorScheme
 		}
 
 		//	Annotations
@@ -79,10 +82,15 @@ class AppleMaps extends Component {
 			zoomLevel,
 			width,
 			height,
-			autoAdjust
+			autoAdjust,
+			colorScheme
 		} = this.props
 
 		TokenManager.getInstance().setToken(token)
+
+		if(colorScheme !== prevProps.colorScheme) {
+			this.map.colorScheme = colorScheme
+		}
 
 		if((
 			prevProps.latitude !== latitude ||
