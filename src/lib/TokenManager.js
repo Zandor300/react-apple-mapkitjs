@@ -8,6 +8,7 @@ class TokenManager {
 
     constructor() {
         this.token = null
+        this.lastMapId = 0;
     }
 
     getToken() {
@@ -16,6 +17,11 @@ class TokenManager {
 
     setToken(token) {
         this.token = token
+    }
+
+    getNewMapId() {
+        this.lastMapId++;
+        return this.lastMapId;
     }
 }
 

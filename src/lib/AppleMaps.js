@@ -2,6 +2,13 @@ import React, { Component } from 'react'
 import TokenManager from "./TokenManager"
 
 class AppleMaps extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			mapId: "map" + TokenManager.getInstance().getNewMapId()
+		}
+	}
+
 	componentDidMount() {
 		const { children, initialMapType, token, colorScheme } = this.props
 
@@ -17,7 +24,7 @@ class AppleMaps extends Component {
 			}
 		})
 
-		this.map = new mapkit.Map('map')
+		this.map = new mapkit.Map(this.state.mapId)
 		this.annotations = {}
 
 		// Set initial mapType
@@ -345,7 +352,7 @@ class AppleMaps extends Component {
 		const { width, height } = this.props
 		return (
 			<div
-				id='map'
+				id={ this.state.mapId }
 				style={{
 					width: width,
 					height: height
