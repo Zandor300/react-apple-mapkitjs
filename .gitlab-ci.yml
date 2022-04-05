@@ -1,0 +1,54 @@
+stages:
+  - build
+  - publish
+  - code-intelligence
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH
+
+build:
+  image: node:lts
+  stage: build
+  before_script:
+    - npm install
+  script:
+    - npm run lib
+  tags:
+    - docker
+  artifacts:
+    paths:
+      - lib/*
+
+publish:
+  image: node:lts
+  stage: publish
+  variables:
+    NPM_TOKEN: ${CI_JOB_TOKEN}
+  before_script:
+    - npm install
+  script:
+    - npm run semantic-release
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - .npm/
+  tags:
+    - docker
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_MESSAGE !~ /chore(release)$/
+  needs:
+    - job: build
+      artifacts: true
+
+code-navigation:
+  image: git.zsinfo.nl:5010/zandor300/docker-lsif
+  stage: code-intelligence
+  script:
+    - lsif-tsc src/**/* --AllowJs --checkJs
+  tags:
+    - docker
+  artifacts:
+    reports:
+      lsif: dump.lsif
+  needs: []
