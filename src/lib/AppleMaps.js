@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import TokenManager from "./TokenManager"
+import ColorScheme from "./ColorScheme";
+import FeatureVisibility from "./FeatureVisibility";
+import MapType from "./MapType";
 
 class AppleMaps extends Component {
 	constructor(props) {
@@ -37,13 +40,25 @@ class AppleMaps extends Component {
 
 		// Set initial mapType
 		if(initialMapType !== undefined) {
-			this.map.mapType = initialMapType
+			if(!MapType.isOneOf(initialMapType)) {
+				console.error("Invalid initialMapType provided to AppleMaps component.")
+			} else {
+				this.map.mapType = initialMapType
+			}
 		}
 		if(colorScheme !== undefined) {
-			this.map.colorScheme = colorScheme
+			if(!ColorScheme.isOneOf(colorScheme)) {
+				console.error("Invalid colorScheme provided to AppleMaps component.")
+			} else {
+				this.map.colorScheme = colorScheme
+			}
 		}
 		if(showsCompass !== undefined) {
-			this.map.showsCompass = showsCompass
+			if(!FeatureVisibility.isOneOf(showsCompass)) {
+				console.error("Invalid showsCompass provided to AppleMaps component.")
+			} else {
+				this.map.showsCompass = showsCompass
+			}
 		}
 		if(showsMapTypeControl !== undefined) {
 			this.map.showsMapTypeControl = showsMapTypeControl
@@ -116,10 +131,18 @@ class AppleMaps extends Component {
 		TokenManager.getInstance().setToken(token)
 
 		if(colorScheme !== prevProps.colorScheme) {
-			this.map.colorScheme = colorScheme
+			if(!ColorScheme.isOneOf(colorScheme)) {
+				console.error("Invalid colorScheme provided to AppleMaps component.")
+			} else {
+				this.map.colorScheme = colorScheme
+			}
 		}
 		if(showsCompass !== prevProps.showsCompass) {
-			this.map.showsCompass = showsCompass
+			if(!FeatureVisibility.isOneOf(showsCompass)) {
+				console.error("Invalid showsCompass provided to AppleMaps component.")
+			} else {
+				this.map.showsCompass = showsCompass
+			}
 		}
 		if(showsMapTypeControl !== prevProps.showsMapTypeControl) {
 			this.map.showsMapTypeControl = showsMapTypeControl
