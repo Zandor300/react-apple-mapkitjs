@@ -7,7 +7,7 @@ workflow:
   rules:
     - if: $CI_COMMIT_BRANCH
 
-build:
+build-lib:
   image: node:lts
   stage: build
   before_script:
@@ -19,12 +19,25 @@ build:
   artifacts:
     paths:
       - lib/*
+  needs: []
+
+build-docs:
+  image: node:lts
+  stage: build
+  before_script:
+    - npm install
+  script:
+    - npm run docs:prod
+  tags:
+    - docker
+  artifacts:
+    paths:
+      - docs/*
+  needs: []
 
 publish:
   image: node:lts
   stage: publish
-  variables:
-    NPM_TOKEN: ${CI_JOB_TOKEN}
   before_script:
     - npm install
   script:
@@ -38,7 +51,7 @@ publish:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_MESSAGE !~ /chore(release)$/
   needs:
-    - job: build
+    - job: build-lib
       artifacts: true
 
 code-navigation:
