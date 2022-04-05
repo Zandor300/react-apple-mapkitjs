@@ -10,7 +10,15 @@ class AppleMaps extends Component {
 	}
 
 	componentDidMount() {
-		const { children, initialMapType, token, colorScheme } = this.props
+		const {
+			children,
+			initialMapType,
+			token,
+			colorScheme,
+			showsCompass,
+			showsMapTypeControl,
+			showsZoomControl
+		} = this.props
 
 		TokenManager.getInstance().setToken(token)
 
@@ -33,6 +41,15 @@ class AppleMaps extends Component {
 		}
 		if(colorScheme !== undefined) {
 			this.map.colorScheme = colorScheme
+		}
+		if(showsCompass !== undefined) {
+			this.map.showsCompass = showsCompass
+		}
+		if(showsMapTypeControl !== undefined) {
+			this.map.showsMapTypeControl = showsMapTypeControl
+		}
+		if(showsZoomControl !== undefined) {
+			this.map.showsZoomControl = showsZoomControl
 		}
 
 		//	Annotations
@@ -90,13 +107,25 @@ class AppleMaps extends Component {
 			width,
 			height,
 			autoAdjust,
-			colorScheme
+			colorScheme,
+			showsCompass,
+			showsMapTypeControl,
+			showsZoomControl
 		} = this.props
 
 		TokenManager.getInstance().setToken(token)
 
 		if(colorScheme !== prevProps.colorScheme) {
 			this.map.colorScheme = colorScheme
+		}
+		if(showsCompass !== prevProps.showsCompass) {
+			this.map.showsCompass = showsCompass
+		}
+		if(showsMapTypeControl !== prevProps.showsMapTypeControl) {
+			this.map.showsMapTypeControl = showsMapTypeControl
+		}
+		if(showsZoomControl !== prevProps.showsZoomControl) {
+			this.map.showsZoomControl = showsZoomControl
 		}
 
 		if((
