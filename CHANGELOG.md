@@ -1,3 +1,10 @@
+## [0.9.4](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/compare/v0.9.3...v0.9.4) (2022-04-06)
+
+
+### Bug Fixes
+
+* Add CHANGELOG.md ([5b89b1c](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/commit/5b89b1c1cf9498afbc999992fd1412c05fca4329))
+
 ## [0.9.3](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/compare/v0.9.2...v0.9.3) (2022-04-05)
 
 
@@ -77,6 +84,3 @@
 
 * Security patch ([d518623](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/commits/d51862339be18b55a502a603e3c6e745312f03ed))
 * Update docs lat lon for coorect lat/lon ([bf586e7](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/commits/bf586e75d80de29e7b6716e21b0cb1f7b4d2736f))
-
-
-
