@@ -45,7 +45,7 @@
     "semantic-release": "19.0.2",
     "style-loader": "0.21.0",
     "webpack": "4.41.5",
-    "webpack-cli": "3.3.10",
+    "webpack-cli": "3.3.12",
     "webpack-dev-server": "3.10.3"
   },
   "author": "tonyduanesmith",
