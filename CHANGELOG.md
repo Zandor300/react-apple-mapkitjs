@@ -1,3 +1,10 @@
+# [0.10.0](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/compare/v0.9.4...v0.10.0) (2022-04-08)
+
+
+### Features
+
+* Support React 18 as peer dependency. ([4d0a7b6](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/commit/4d0a7b6d9345dce71158940029dedfd7575a1baf))
+
 ## [0.9.4](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/compare/v0.9.3...v0.9.4) (2022-04-06)
 
 
