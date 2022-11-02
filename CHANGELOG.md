@@ -1,3 +1,10 @@
+# [0.11.0](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/compare/v0.10.0...v0.11.0) (2022-11-02)
+
+
+### Features
+
+* Allow setting the glyph color for an Annotation. ([27c1cd2](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/commit/27c1cd2d53e85af243229566109cf7175058bdba))
+
 # [0.10.0](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/compare/v0.9.4...v0.10.0) (2022-04-08)
 
 
