@@ -246,6 +246,7 @@ class AppleMaps extends Component {
 			color,
 			glyphText,
 			glyphImage,
+			glyphColor,
 			selected,
 			title,
 			subtitle,
@@ -262,6 +263,7 @@ class AppleMaps extends Component {
 		})
 		glyphText ? (newAnnotation.glyphText = glyphText) : ''
 		glyphImage ? (newAnnotation.glyphImage = { 1: glyphImage }) : ''
+		glyphColor ? (newAnnotation.glyphColor = glyphColor) : ''
 		if(id) {
 			this.annotations[id] = newAnnotation
 		} else {
