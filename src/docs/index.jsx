@@ -25,7 +25,7 @@ function Demo() {
 					title="Apple"
 					subtitle="work"
 					selected={true}
-					glyphText=""
+					glyphText="🍎"
 				/>
 				<Annotation
 					id="leeds"
