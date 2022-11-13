@@ -37,7 +37,7 @@
     "@semantic-release/npm": "9.0.1",
     "babel-loader": "9.0.1",
     "concurrently": "7.5.0",
-    "css-loader": "6.7.1",
+    "css-loader": "6.7.2",
     "dotenv-webpack": "8.0.1",
     "html-webpack-plugin": "5.5.0",
     "react": "18.2.0",
