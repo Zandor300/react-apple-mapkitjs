@@ -44,7 +44,7 @@
     "react-dom": "18.3.1",
     "semantic-release": "24.2.3",
     "style-loader": "3.3.4",
-    "webpack": "5.99.0",
+    "webpack": "5.99.2",
     "webpack-cli": "4.10.0",
     "webpack-dev-server": "5.2.1"
   },
