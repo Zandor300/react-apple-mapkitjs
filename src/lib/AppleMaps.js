@@ -10,6 +10,8 @@ class AppleMaps extends Component {
 		this.state = {
 			mapId: "map" + TokenManager.getInstance().getNewMapId()
 		}
+        this.onSelect = this.onSelect.bind(this)
+        this.onDeselect = this.onDeselect.bind(this)
 	}
 
 	componentDidMount() {
@@ -34,6 +36,8 @@ class AppleMaps extends Component {
 				done(TokenManager.getInstance().getToken())
 			}
 		})
+        mapkit.addEventListener('select', this.eventHandler);
+        mapkit.addEventListener('deselect', this.eventHandler);
 
 		this.map = new mapkit.Map(this.state.mapId)
 		this.annotations = {}
@@ -238,6 +242,40 @@ class AppleMaps extends Component {
 		}
 	}
 
+    onSelect(event) {
+        if (!event.annotation) {
+            return;
+        }
+        const {id} = event.annotation.data
+        if (id === undefined) {
+            return;
+        }
+        if (!(id in this.annotations)) {
+            return;
+        }
+        const annotation = this.annotations[id]
+        if (annotation.onSelect) {
+            annotation.onSelect(event)
+        }
+    }
+
+    onDeselect(event) {
+        if (!event.annotation) {
+            return;
+        }
+        const {id} = event.annotation.data
+        if (id === undefined) {
+            return;
+        }
+        if (!(id in this.annotations)) {
+            return;
+        }
+        const annotation = this.annotations[id]
+        if (annotation.onDeselect) {
+            annotation.onDeselect(event)
+        }
+    }
+
 	createAnnotation(annotationOptions) {
 		const {
 			id,
@@ -261,9 +299,11 @@ class AppleMaps extends Component {
 			selected,
 			visible
 		})
+        newAnnotation.data.id = id
 		glyphText ? (newAnnotation.glyphText = glyphText) : ''
 		glyphImage ? (newAnnotation.glyphImage = { 1: glyphImage }) : ''
 		glyphColor ? (newAnnotation.glyphColor = glyphColor) : ''
+        this.updateEventHandlers(annotationOptions)
 		if(id) {
 			this.annotations[id] = newAnnotation
 		} else {
@@ -291,6 +331,7 @@ class AppleMaps extends Component {
 		if(latitude !== annotation.coordinate.latitude || longitude !== annotation.coordinate.longitude) {
 			annotation.coordinate = new mapkit.Coordinate(latitude, longitude)
 		}
+        this.updateEventHandlers(annotationOptions)
 	}
 
 	removeAnnotation(annotationOptions) {
@@ -306,6 +347,21 @@ class AppleMaps extends Component {
 		this.map.removeAnnotation(this.annotations[id])
 		delete this.annotations[id]
 	}
+
+    updateEventHandlers(annotationOptions) {
+        const { id } = annotationOptions
+
+        if(id === undefined) {
+            return
+        }
+        if(!(id in this.annotations)) {
+            return
+        }
+
+        const annotation = this.annotations[id]
+        annotation.onSelect = annotationOptions.onSelect
+        annotation.onDeselect = annotationOptions.onDeselect
+    }
 
 	createImageAnnotation(annotationOptions) {
 		const {
