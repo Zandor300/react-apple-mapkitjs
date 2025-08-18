@@ -1,3 +1,10 @@
+# [0.12.0](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/compare/v0.11.0...v0.12.0) (2025-08-18)
+
+
+### Features
+
+* Add support for onSelect and onDeselect events for annotations. ([12f0216](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/commit/12f0216bbf2e5672fc5c1ce0c75b0054b002bcb2))
+
 # [0.11.0](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/compare/v0.10.0...v0.11.0) (2022-11-02)
 
 
