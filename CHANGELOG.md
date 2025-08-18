@@ -1,3 +1,10 @@
+## [0.13.1](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/compare/v0.13.0...v0.13.1) (2025-08-18)
+
+
+### Bug Fixes
+
+* Undefined function being registered as event listener. ([574f96d](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/commit/574f96df9e002de33933e5659082a499c495b250))
+
 # [0.13.0](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/compare/v0.12.0...v0.13.0) (2025-08-18)
 
 
