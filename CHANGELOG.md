@@ -1,3 +1,10 @@
+# [0.13.0](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/compare/v0.12.0...v0.13.0) (2025-08-18)
+
+
+### Features
+
+* Add ColorScheme.Adaptive ([31092e6](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/commit/31092e64b8e9959211c2a34318bd81d6d2c44ad8))
+
 # [0.12.0](https://git.zsinfo.nl/Zandor300/react-apple-mapkitjs/compare/v0.11.0...v0.12.0) (2025-08-18)
 
 
