@@ -36,8 +36,8 @@ class AppleMaps extends Component {
 				done(TokenManager.getInstance().getToken())
 			}
 		})
-        mapkit.addEventListener('select', this.eventHandler);
-        mapkit.addEventListener('deselect', this.eventHandler);
+        mapkit.addEventListener('select', this.onSelect);
+        mapkit.addEventListener('deselect', this.onDeselect);
 
 		this.map = new mapkit.Map(this.state.mapId)
 		this.annotations = {}
